@@ -61,7 +61,7 @@ end
 -- into a string value
 function _M.generate_var_value(data)
   if data == nil then
-    key = string_format("%d", math_rand(10000, 65000))
+    key = string_format("%d", math_rand(10000, 99999))
     ngx.log(ngx_INFO, string_format("%s:%s", "empty data return random string", key))
     return key
   end
