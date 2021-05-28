@@ -59,7 +59,7 @@ end
 -- into a string value
 function _M.generate_var_value(data)
   if data == nil then
-    return ""
+    return tostring(math.random(10000, 65000))
   end
 
   local t = {}
