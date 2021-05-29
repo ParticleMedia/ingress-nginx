@@ -83,8 +83,9 @@ function _M.generate_var_value(data)
     end
   end
   if table.getn(t) == 0 then
-    ngx.log(ngx_INFO, string_format("%s:%d", "empty hashing table return random string", table.getn(t)))
-    return string_format("%d", math_rand(10000, 99999))
+    key = string_format("%d", math_rand(10000, 99999))
+    ngx.log(ngx_INFO, string_format("%s:%s", "empty hashing table return random string", key))
+    return
   end
   return table.concat(t, "")
 end
