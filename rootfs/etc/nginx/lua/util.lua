@@ -10,6 +10,8 @@ local type          = type
 local next          = next
 local table         = table
 local re_gmatch     = ngx.re.gmatch
+local math_rand     = math.random
+local ngx_INFO = ngx.INFO
 
 local _M = {}
 
@@ -59,9 +61,10 @@ end
 -- into a string value
 function _M.generate_var_value(data)
   if data == nil then
-    return ""
+    key = string_format("%d", math_rand(10000, 99999))
+    ngx.log(ngx_INFO, string_format("%s:%s", "empty data return random string", key))
+    return key
   end
-
   local t = {}
   for _, value in ipairs(data) do
     local var_name = value[2] or value[3]
@@ -69,12 +72,21 @@ function _M.generate_var_value(data)
       if var_name:match("^%d+$") then
         var_name = tonumber(var_name)
       end
-      table.insert(t, ngx.var[var_name])
+      local v = ngx.var[var_name]
+      if v == nil or v == "" then
+        ngx.log(ngx_INFO, string_format("%s:%s", "empty var replace with random string", var_name))
+        v = string_format("%d", math_rand(10000, 99999))
+      end
+      table.insert(t, v)
     else
       table.insert(t, value[1] or value[4])
     end
   end
-
+  if table.getn(t) == 0 then
+    key = string_format("%d", math_rand(10000, 99999))
+    ngx.log(ngx_INFO, string_format("%s:%s", "empty hashing table return random string", key))
+    return key
+  end
   return table.concat(t, "")
 end
 
