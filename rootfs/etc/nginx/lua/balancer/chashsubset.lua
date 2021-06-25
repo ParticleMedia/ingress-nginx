@@ -6,6 +6,7 @@ local util = require("util")
 local ngx_log = ngx.log
 local ngx_ERR = ngx.ERR
 local ngx_WARN = ngx.WARN
+local ngx_INFO = ngx.INFO
 local setmetatable = setmetatable
 local tostring = tostring
 local math = math
@@ -65,7 +66,7 @@ local function build_subset_map(backend)
     subset_map[subset_id] = 1
   end
 
-  ngx_log(ngx_WARN, string_format("backend: %s has subsets: %s", backend.name, dump(subsets)))
+  ngx_log(ngx_INFO, string_format("backend: %s has subsets: %s", backend.name, dump(subsets)))
   return subset_map, subsets
 end
 
