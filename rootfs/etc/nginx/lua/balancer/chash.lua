@@ -28,6 +28,9 @@ end
 
 function _M.balance(self)
   local key = util.generate_var_value(self.hash_by)
+  if key == "" then
+    key = tostring(math.random(0, 1000000))
+  end
   return self.instance:find(key)
 end
 
